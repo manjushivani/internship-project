@@ -4,14 +4,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from behave import given, when, then
 from time import sleep
 
-#EMAIL = (By.ID, 'email-2')
-#PASSWORD = (By.ID, 'field')
-#LOGIN = (By.XPATH, "//a[@wized='loginButton']")
-#VERIFY_LOGIN = (By.XPATH, "//div[text()='Listings']")
-#SECONDARY_OPTION = (By.XPATH, "//div[text()='Secondary']")
-#TOTAL_PAGES_NUMBER = (By.XPATH, "//div[text()='116']")
-#LAST_PAGE_ARROW_BUTTON =(By.XPATH, "//a[contains(@class,'pagination__button')]")
-#FIRST_PAGE_ARROW_BUTTON = (By.XPATH, "//div[contains(@class,'pagination__button')]")
+# EMAIL = (By.ID, 'email-2')
+# PASSWORD = (By.ID, 'field')
+# LOGIN = (By.XPATH, "//a[@wized='loginButton']")
+# VERIFY_LOGIN = (By.XPATH, "//div[text()='Listings']")
+# SECONDARY_OPTION = (By.XPATH, "//div[text()='Secondary']")
+# TOTAL_PAGES_NUMBER = (By.XPATH, "//div[text()='116']")
+# LAST_PAGE_ARROW_BUTTON =(By.XPATH, "//a[contains(@class,'pagination__button')]")
+# FIRST_PAGE_ARROW_BUTTON = (By.XPATH, "//div[contains(@class,'pagination__button')]")
 
 @given('Open the main page')
 def open_main(context):
@@ -26,14 +26,14 @@ def enter_password(context):
     context.app.login_page.enter_password('internshipproject')
 
 @then('CLick continue button')
-def enter_login(context):
-    context.app.login_page.enter_login()
-    sleep(10)
+def enter_continue(context):
+    context.app.login_page.enter_continue()
+
 
 @then('Click on Secondary option at the left side menu')
 def click_secondary_option(context):
     context.app.login_page.click_secondary_option()
-    sleep(5)
+
 
 @then('Verify the right page opens')
 def verify_login(context):
