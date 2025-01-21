@@ -25,9 +25,11 @@ class LoginPage(BasePage):
             self.click(*self.LOGIN)
 
         def click_secondary_option(self):
+            sleep(2)
             self.click(*self.SECONDARY_OPTION)
 
         def verify_login(self):
+            sleep(2)
             expected_result = 'Listings'
             actual_result = self.driver.find_element(*self.VERIFY_LOGIN).text
             print(expected_result, actual_result)
