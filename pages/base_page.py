@@ -16,17 +16,21 @@ class BasePage:
     def send_keys(self, text, *locator):
         self.driver.find_element(*locator).send_keys(text)
 
-    def click(self, *locator):
-        self.driver.find_element(*locator).click()
+    #def click(self, *locator):
+    def click(self, locator):
+        #self.driver.find_element(*locator).click()
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(locator)).click()
 
     def find_element(self, *locator):
         return self.driver.find_element(*locator)
+        #return WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator)).text
 
     def find_elements(self, *locator):
         return self.driver.find_elements(*locator)
 
     def input_text(self, text, *locator):
         self.driver.find_element(*locator).send_keys(text)
+        #WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).send_keys(text)
 
     def text(self, *locator):
         return self.driver.find_element(*locator).text
@@ -47,7 +51,7 @@ class BasePage:
         self.driver.switch_to.window(window_id)
         print('Current window ', self.driver.current_window_handle)
 
-    def wait_for_element_visible(self, *locator):
+    def wait_for_element_visible(self, locator):
         return self.wait.until(
             EC.visibility_of_element_located(locator),
             message=f'Element by {locator} not visible'
