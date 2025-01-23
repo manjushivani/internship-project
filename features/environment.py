@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 #from webdriver_manager.firefox import GeckoDriverManager
-
+from support.logger import logger
 
 from app.application import Application
 
@@ -62,14 +62,23 @@ def browser_init(context):
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
     #browser_init(context,scenario.name)
+    logger.info(f'Started scenario: {scenario.name}')
     browser_init(context)
 
 def before_step(context, step):
     print('\nStarted step: ', step)
+    logger.info(f'Started step: {step}')
 
 def after_step(context, step):
     if step.status == 'failed':
         print('\nStep failed: ', step)
+        logger.error(f'Step failed: {step}')
 
 def after_scenario(context, feature):
+       # Add browser logs:
+    # browser_logs = context.driver.get_log('browser')
+    # with open("browser_logs.txt", "w") as log_file:
+    #     for log_entry in browser_logs:
+    #         log_file.write(f"{log_entry['level']} - {log_entry['timestamp']} - {log_entry['message']}\n")
+    # print("Browser logs have been saved to browser_logs.txt")
     context.driver.quit()

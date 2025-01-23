@@ -6,7 +6,7 @@ from time import sleep
 from pages.base_page import BasePage
 
 class PaginationNumber(BasePage):
-    TOTAL_PAGES_NUMBER = (By.XPATH, "//div[text()='118']")
+    TOTAL_PAGES_NUMBER = (By.XPATH, "//div[text()='119']")
     LAST_PAGE_ARROW_BUTTON = (By.XPATH, "//a[contains(@class,'pagination__button')]")
     FIRST_PAGE_ARROW_BUTTON = (By.XPATH, "//div[contains(@class,'pagination__button')]")
 
@@ -28,9 +28,9 @@ class PaginationNumber(BasePage):
             print(f"Successfully loaded page {page}.")
 
         print("Pagination testing completed successfully!")
-
+        sleep(2)
         current_page = self.driver.find_element(*self.TOTAL_PAGES_NUMBER)
-        assert current_page.text == "118", f"Expected page 118, got current_page"
+        assert current_page.text == "119", f"Expected page 119, got current_page{current_page.text}"
         print("Successfully reached the last page.")
 
     def go_back_pagination(self, *locator):

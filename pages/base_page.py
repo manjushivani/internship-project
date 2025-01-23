@@ -1,5 +1,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from support.logger import logger
+
 
 class BasePage:
 
@@ -9,6 +11,7 @@ class BasePage:
 
     def open_url(self, url):
         self.driver.get(url)
+        logger.info(f'opening url: {url}')
 
     def get_url(self):
         return self.driver.current_url
@@ -22,15 +25,17 @@ class BasePage:
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(locator)).click()
 
     def find_element(self, *locator):
+        logger.info(f'searching for element by locator: {locator}')
         return self.driver.find_element(*locator)
-        #return WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator)).text
+
 
     def find_elements(self, *locator):
+        logger.info(f"searching for elements by locator: {locator}")
         return self.driver.find_elements(*locator)
 
     def input_text(self, text, *locator):
+        logger.info(f'entering text by {text} for locator: {locator}')
         self.driver.find_element(*locator).send_keys(text)
-        #WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).send_keys(text)
 
     def text(self, *locator):
         return self.driver.find_element(*locator).text
@@ -57,19 +62,19 @@ class BasePage:
             message=f'Element by {locator} not visible'
         )
 
-    def wait_for_element_invisible(self, *locator):
+    def wait_for_element_invisible(self, locator):
         self.wait.until(
             EC.invisibility_of_element_located(locator),
             message=f'Element by {locator} should not be visible'
         )
 
-    def wait_for_element_clickable(self, *locator):
+    def wait_for_element_clickable(self, locator):
         return self.wait.until(
             EC.element_to_be_clickable(locator),
             message=f'Element by {locator} not clickable'
         )
 
-    def wait_and_click(self, *locator):
+    def wait_and_click(self, locator):
         self.wait.until(
             EC.element_to_be_clickable(locator),
             message=f'Element by {locator} not clickable'
