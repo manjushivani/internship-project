@@ -6,50 +6,80 @@ from time import sleep
 from pages.base_page import BasePage
 
 class PaginationNumber(BasePage):
-    TOTAL_PAGES_NUMBER = (By.XPATH, "//div[text()='119']")
-    LAST_PAGE_ARROW_BUTTON = (By.XPATH, "//a[contains(@class,'pagination__button')]")
-    FIRST_PAGE_ARROW_BUTTON = (By.XPATH, "//div[contains(@class,'pagination__button')]")
+
+    TOTAL_PAGES_NUMBER = (By.CSS_SELECTOR, "[wized='totalPageProperties']")
+    LAST_PAGE_ARROW_BUTTON = (By.CSS_SELECTOR, "[wized='nextPageMLS']")
+    FIRST_PAGE_ARROW_BUTTON = (By.CSS_SELECTOR, "[wized='previousPageMLS']")
+    CURRENT_PAGE = (By.CSS_SELECTOR, "[wized='currentPageProperties']")
+
 
     def go_to_pagination(self, *locator):
-        #self.driver.find_element(*locator).click()
-        sleep(3)
+        self.driver.execute_script("window.scrollBy(0,2000)", "")
+
+        sleep(6)
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
         total_pages = int(self.driver.find_element(*self.TOTAL_PAGES_NUMBER).text)
+        current_page = int(self.driver.find_element(*self.CURRENT_PAGE).text)
+
         print(f"Total pages: {total_pages}")
+        print(f"Current page: {current_page}")
+
         # Navigate through all pages using a for loop
         for page in range(1, total_pages + 1):
-            # Locate and interact with the page input or buttons (update selector as needed)
-            wait = WebDriverWait(self.driver, 15)
-            # current_page_input = context.driver.find_element(By.XPATH, "//div[@w-el-text=1]").text
-            last_page_arrow_button = wait.until(EC.visibility_of_element_located(self.LAST_PAGE_ARROW_BUTTON))
-            last_page_arrow_button.click()
-            # current_page_input = context.driver.find_element(By.XPATH, "//div[@w-el-text=1]").text
-            # context.driver.find_element(By.XPATH, "//a[contains(@class,'pagination__button')]").click()
+
+            wait = WebDriverWait(self.driver, 20)
+            sleep(6)
 
             print(f"Successfully loaded page {page}.")
+            if page != total_pages:
 
+                self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+                last_page_arrow_button = wait.until(EC.visibility_of_element_located(self.LAST_PAGE_ARROW_BUTTON))
+                last_page_arrow_button.click()
+
+            print("Successfully reached the next page.")
+
+        current_page_after_loop = int(self.driver.find_element(*self.CURRENT_PAGE).text)
+
+        print(f"Current pages after loop: {current_page_after_loop}")
+
+        assert current_page_after_loop == total_pages, 'Did not reach last page'
         print("Pagination testing completed successfully!")
-        sleep(2)
-        current_page = self.driver.find_element(*self.TOTAL_PAGES_NUMBER)
-        assert current_page.text == "119", f"Expected page 119, got current_page{current_page.text}"
-        print("Successfully reached the last page.")
+
 
     def go_back_pagination(self, *locator):
-        #self.driver.find_element(*locator).click()
+        #self.driver.execute_script("window.scrollBy(0,2000)", "")
+        # self.driver.find_element(*locator).click()
+        sleep(6)
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
         total_pages = int(self.driver.find_element(*self.TOTAL_PAGES_NUMBER).text)
+        current_page = int(self.driver.find_element(*self.CURRENT_PAGE).text)
+
         print(f"Total pages: {total_pages}")
+        print(f"Current page: {current_page}")
 
-        for page in range(1, total_pages - 1):
-            # Locate and interact with the page input or buttons (update selector as needed)
+        # Navigate through all pages using a for loop
+        for page in range(total_pages,0, - 1):
+
             wait = WebDriverWait(self.driver, 15)
-            # current_page_input = context.driver.find_element(By.XPATH, "//div[text()='116']").text
-            first_page_arrow_button = wait.until(EC.visibility_of_element_located(self.FIRST_PAGE_ARROW_BUTTON))
-            first_page_arrow_button.click()
+            sleep(6)
+
             print(f"Successfully loaded page {page}.")
+            if page != 1:
+                self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                wait = WebDriverWait(self.driver, 20)
+                first_page_arrow_button = wait.until(EC.visibility_of_element_located(self.FIRST_PAGE_ARROW_BUTTON))
+                first_page_arrow_button.click()
 
+            print("Successfully reached the next page.")
+
+        current_page = int(self.driver.find_element(*self.CURRENT_PAGE).text)
+
+        print(f"Current pages after loop: {current_page}")
+
+        assert current_page == 1, 'Did not reach first page'
         print("Pagination testing completed successfully!")
-        sleep(5)
 
-        first_page_number = self.driver.find_element(By.XPATH,"//div[@wized='currentPageProperties']").text
-        print(first_page_number)
-        sleep(2)
-        print("Successfully returned to the first page.")

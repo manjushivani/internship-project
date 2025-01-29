@@ -4,20 +4,33 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 #from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.chrome.service import Service
+
+from selenium.webdriver.chrome.options import Options
 from support.logger import logger
+
 
 from app.application import Application
 
 #def browser_init(context,scenario_name):
-def browser_init(context):
+def browser_mobile_init(context):
     """
     :param context: Behave context
     """
-    driver_path = ChromeDriverManager().install()
-    # # Google chrome
     #driver_path = ChromeDriverManager().install()
+
+    # Set up Chrome options for mobile emulation
+
+    mobile_emulation = {"deviceName": "Nexus 5"}
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+    #context.driver = webdriver.Remote(command_executor='http://127.0.0.1:4444/wd/hub',options=chrome_options)
+
+    # # Google chrome
+    driver_path = ChromeDriverManager().install()
     service = Service(driver_path)
-    context.driver = webdriver.Chrome(service=service)
+    #context.driver = webdriver.Chrome(service=service)
+    context.driver = webdriver.Chrome(service=service, options=chrome_options)
 
     # ### BROWSERSTACK ###
     # # Register for BrowserStack, then grab it from https://www.browserstack.com/accounts/settings
@@ -57,13 +70,16 @@ def browser_init(context):
     context.driver.maximize_window()
     context.driver.implicitly_wait(4)
     context.driver.wait = WebDriverWait(context.driver, 15)
+
     context.app = Application(context.driver)
 #def before_scenario(context, scenario):
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
     #browser_init(context,scenario.name)
     logger.info(f'Started scenario: {scenario.name}')
-    browser_init(context)
+    #browser_init(context)
+    browser_mobile_init(context)
+
 
 def before_step(context, step):
     print('\nStarted step: ', step)

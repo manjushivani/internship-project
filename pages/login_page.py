@@ -12,7 +12,9 @@ class LoginPage(BasePage):
         LOGIN = (By.CSS_SELECTOR, "[wized='loginButton']")
         #LOGIN = (By.XPATH, "//a[@class='login-button w-button']")
         VERIFY_LOGIN = (By.XPATH, "//div[text()='Listings']")
-        SECONDARY_OPTION = (By.XPATH, "//div[text()='Secondary']")
+        #SECONDARY_OPTION = (By.XPATH, "//div[text()='Secondary']")
+        SECONDARY_OPTION = (By.CSS_SELECTOR, "a.menu-text-link-leaderboard[href*='/secondary-listings']")
+
 
         def enter_email(self, email):
             #sleep(3)
@@ -26,12 +28,12 @@ class LoginPage(BasePage):
 
         def enter_continue(self):
             #self.click(*self.LOGIN)
-            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.LOGIN)).click()
+            WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(self.LOGIN)).click()
 
         def click_secondary_option(self):
             #sleep(2)
             #self.click(*self.SECONDARY_OPTION)
-            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.SECONDARY_OPTION)).click()
+            WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(self.SECONDARY_OPTION)).click()
 
         def verify_login(self):
             #sleep(2)
