@@ -28,7 +28,7 @@ class PaginationNumber(BasePage):
         # Navigate through all pages using a for loop
         for page in range(1, total_pages + 1):
 
-            wait = WebDriverWait(self.driver, 20)
+            wait = WebDriverWait(self.driver, 25)
             sleep(6)
 
             print(f"Successfully loaded page {page}.")
@@ -64,7 +64,7 @@ class PaginationNumber(BasePage):
         # Navigate through all pages using a for loop
         for page in range(total_pages,0, - 1):
 
-            wait = WebDriverWait(self.driver, 15)
+            wait = WebDriverWait(self.driver, 25)
             sleep(6)
 
             print(f"Successfully loaded page {page}.")

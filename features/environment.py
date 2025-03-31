@@ -12,8 +12,8 @@ from support.logger import logger
 
 from app.application import Application
 
-#def browser_init(context,scenario_name):
-def browser_mobile_init(context):
+def browser_init(context,scenario_name):
+#def browser_mobile_init(context):
     """
     :param context: Behave context
     """
@@ -21,22 +21,22 @@ def browser_mobile_init(context):
 
     # Set up Chrome options for mobile emulation
 
-    mobile_emulation = {"deviceName": "Nexus 5"}
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+    # mobile_emulation = {"deviceName": "Nexus 5"}
+    #chrome_options = webdriver.ChromeOptions()
+    # chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
     #context.driver = webdriver.Remote(command_executor='http://127.0.0.1:4444/wd/hub',options=chrome_options)
 
     # # Google chrome
     driver_path = ChromeDriverManager().install()
     service = Service(driver_path)
-    #context.driver = webdriver.Chrome(service=service)
-    context.driver = webdriver.Chrome(service=service, options=chrome_options)
+    context.driver = webdriver.Chrome(service=service)
+    #context.driver = webdriver.Chrome(service=service, options=chrome_options)
 
     # ### BROWSERSTACK ###
     # # Register for BrowserStack, then grab it from https://www.browserstack.com/accounts/settings
-    # bs_user = 'manju_DHOswR'
-    # bs_key = 'YByBWFwxDMxeFqThA3SF'
-    # url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+    #bs_user = 'manju_DHOswR'
+    #bs_key = 'YByBWFwxDMxeFqThA3SF'
+    #url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
     # #
     # options = Options()
     # bstack_options = {
@@ -49,8 +49,16 @@ def browser_mobile_init(context):
     #     # 'browserVersion': 15.6,
     #     # 'sessionName': scenario_name,
     # }
+    # bstack_options = {
+    #     'platform': 'IOS',
+    #     'deviceName': 'iPhone 13 Pro',  # Adjust device name as needed (e.g., iPhone 11, etc.)
+    #     'osVersion': '15.0',  # Adjust iOS version as needed
+    #     'browserName': 'Safari',  # Browser used on iPhone
+    #     'sessionName': scenario_name,
+    # }scenario_name
+
     # options.set_capability('bstack:options', bstack_options)
-    # context.driver = webdriver.Remote(command_executor=url, options=options)
+    #context.driver = webdriver.Remote(command_executor=url, options=options)
 
     ## Firefox
     # driver_path = GeckoDriverManager().install()
@@ -75,10 +83,10 @@ def browser_mobile_init(context):
 #def before_scenario(context, scenario):
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
-    #browser_init(context,scenario.name)
+    browser_init(context,scenario.name)
     logger.info(f'Started scenario: {scenario.name}')
     #browser_init(context)
-    browser_mobile_init(context)
+    #browser_mobile_init(context)
 
 
 def before_step(context, step):
