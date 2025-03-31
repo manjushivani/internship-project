@@ -67,7 +67,7 @@ def verify_next_step(context):
     context.app.settings_page.verify_next_step()
 
 
-    pass
+    
 
 
 

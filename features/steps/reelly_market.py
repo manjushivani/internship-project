@@ -2,13 +2,13 @@ from behave import  then
 from time import sleep
 
 @then ('Click on “Market” at the left side menu.')
-def click_market(context):
-    context.app.market_page.click_market()
+def market(context):
+    context.app.market_page.market()
 
 
-@then ('Verify the right page opens.')
-def verify_right_page(context):
-    context.app.market_page.verify_right_page()
+@then ('Verify market page.')
+def verify_market(context):
+    context.app.market_page.verify_market()
 
 
 @then ('Click on “Add Company” button.')
@@ -23,5 +23,5 @@ def verify_add_company_page_opens(context):
 
 @then ('Verify the button “Publish my company” is available.')
 def publish_my_company(context):
-    context.app.market_page.publish_company()
+    context.app.market_page.publish_my_company()
 
